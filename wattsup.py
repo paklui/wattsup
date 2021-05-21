@@ -1,4 +1,5 @@
 #!/usr/bin/python2.7 -tt
+##!/usr/bin/python3
 """Watts Up? Pro/.Net meter logger (https://www.wattsupmeters.com).
 
 This script reads meter values and saves the read data as CSV files.
@@ -88,7 +89,13 @@ class WattsUp(object):
     # fields[18] = fields[18]
     fields[19] = str(int(fields[19]) / 10.0)
     if len(fields) is 21:
-      fields[20] = str(int(fields[20].replace(';\r\n', '')))
+      try:
+        fields[20] = str(int(fields[20].replace(';\r\n', '')))
+      except:
+        print fields[20]
+        fields[20] = 0
+      #fields[20] = str(int(fields[20].replace(';', '')))
+      #fields[20] = str(int(fields[20].replace(';', '').strip('\0')))
     elif len(fields) is 22:
       fields[21] = str(int(fields[21].replace(';\r\n', '')))
     return fields[1:]
